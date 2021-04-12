@@ -1,9 +1,10 @@
 import re
 
-def get_coefficient(formula:str):
+def get_coefficient(formula:str) -> dict:
     formula = formula.replace(' ','')
-    variables = {}
+    coefficients = {}
     term = ""
+
     for f in formula + ';':
         variable = re.compile('(\W?[0-9]+)([a-zA-Z]+)')
         constant_term = re.compile('(\W?[0-9]+);')
@@ -14,16 +15,16 @@ def get_coefficient(formula:str):
         if variable == None and constant_term == None:
             continue
         elif variable != None:
-            print(variable.group(1))
-            print('variable:',variable.group(2))
+            coefficients[variable.group(2)] = variable.group(1)
             term = ""
         elif constant_term != None:
-            print(constant_term.group(1))
-            print('constant')
+            coefficients['constant'] = constant_term.group(1)
             term = ""
 
+    return coefficients
+
 if __name__ == '__main__':
-    get_coefficient('-51i-31234')
+    print(get_coefficient(''))
 
 """
 0.008~0.009
