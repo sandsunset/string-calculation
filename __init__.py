@@ -1,6 +1,3 @@
-from time import time
-start = time()
-
 import re
 
 def get_coefficient(formula:str):
@@ -24,7 +21,6 @@ def get_coefficient(formula:str):
 
 if __name__ == '__main__':
     get_coefficient('-5i-3x')
-    print(f"{time() - start}s")
 
 """
 0.008~0.009
