@@ -39,7 +39,24 @@ class StringCal:
                 term = constant_term.group(2)
 
         return coefficients
+    
+    def simplify(self) -> str:
+        simplified_formula = ""
+        no_plus_minus = re.compile('[0-9]+')
+        coefficients = self.get_coefficient()
+
+        for variable in coefficients:
+            coefficient = str(coefficients[variable])
+
+            if no_plus_minus.match(coefficient) != None and simplified_formula != '':
+                coefficient = '+' + coefficient
+            if variable == 'constant':
+                simplified_formula += coefficient
+            else:
+                simplified_formula += coefficient + variable
+
+        return simplified_formula
 
 if __name__ == '__main__':
-    formula = StringCal('2x+1-3')
-    print(formula.get_coefficient())
+    formula = StringCal('2x+3x+1-3+3y')
+    print(formula.simplify())
