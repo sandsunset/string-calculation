@@ -1,8 +1,9 @@
 import re
 
 class StringCal:
-    def __init__(self, formula:str):
+    def __init__(self, formula:str, **variables):
         self.formula = formula.replace(' ', '')
+        self.variables = variables
 
     def get_coefficient(self) -> dict:
         coefficients = {}
@@ -57,6 +58,17 @@ class StringCal:
 
         return simplified_formula
 
+    def define(self, **kwargs) -> int:
+        formula = self.formula
+        if kwargs != {}:
+            self.variables = kwargs
+
+        for var in self.variables:
+            var_value = str(self.variables[var])
+            formula = formula.replace(var, '*' + var_value)
+
+        return eval(formula)
+
 if __name__ == '__main__':
-    formula = StringCal('2x+3x+1-3+3y')
-    print(formula.simplify())
+    formula = StringCal(formula='2x+3x+1-3+3y',x=1,y=1)
+    print(formula.define())
