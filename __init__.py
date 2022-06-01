@@ -1,3 +1,5 @@
+import time # runtime test
+
 import re
 
 class StringCal:
@@ -26,7 +28,7 @@ class StringCal:
                 if is_coefficientOne.match(variable_term.group()):
                     coefficient += '1'
                 try:
-                    coefficients[variable] = eval(str(coefficients[variable]) + coefficient)
+                    coefficients[variable] = str(coefficients[variable]) + coefficient
                 except KeyError:
                     coefficients[variable] = int(coefficient)
                 term = ""
@@ -34,7 +36,7 @@ class StringCal:
                 constant = constant_term.group(1)
                 
                 try:
-                    coefficients['constant'] = eval(str(coefficients['constant']) + constant)
+                    coefficients['constant'] = str(coefficients['constant']) + constant
                 except KeyError:
                     coefficients['constant'] = int(constant)
                 term = constant_term.group(2)
@@ -70,5 +72,7 @@ class StringCal:
         return eval(formula)
 
 if __name__ == '__main__':
-    formula = StringCal(formula='2x+3x+1-3+3y',x=1,y=1)
-    print(formula.define())
+    start = time.time()
+    formula = StringCal(formula='2x+1+3x-3+3y',x=1,y=1)
+    print(formula.get_coefficient())
+    print(time.time() - start)
